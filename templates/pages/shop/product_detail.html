@@ -1,0 +1,76 @@
+{% extends '../../index.html' %}
+
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+        <ul id="nav" class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="/" class="collapsed" aria-label="Toggle navigation">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'shop' %}" class="active" aria-label="Toggle navigation">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" class="collapsed" aria-label="Toggle navigation">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'blog' %}" class="collapsed" aria-label="Toggle navigation">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}" class="collapsed" aria-label="Toggle navigation">A propos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+
+{% block content %}
+<section class="product-detail-section">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar avec les catégories -->
+            <div class="col-lg-3">
+                <div class="sidebar">
+                    <h4>Catégories</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{% url 'shop' %}">Toutes les catégories</a>
+                        </li>
+                        {% for category in categories %}
+                        <li class="list-group-item">
+                            <a href="{% url 'shop' %}?category={{ category.id }}">{{ category.name }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Détails du produit -->
+            <div class="col-lg-9">
+                <div class="product-detail">
+                    <div class="product-thumb">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+                    </div>
+                    <div class="product-content">
+                        <h1>{{ product.name }}</h1>
+                        <p class="price">{{ product.price }} XOF</p>
+                        <p>{{ product.description|safe }}</p>
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success">Ajouter au panier</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

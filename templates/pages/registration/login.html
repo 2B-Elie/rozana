@@ -1,0 +1,90 @@
+{% extends '../../index.html' %}
+{% load static %}
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+        <ul id="nav" class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="/" class="collapsed" aria-label="Toggle navigation">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'shop' %}" class="collapsed" aria-label="Toggle navigation">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" aria-label="Toggle navigation">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="collapsed" aria-label="Toggle navigation">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}" class="collapsed" aria-label="Toggle navigation">A propos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+
+{% block content %}
+
+<style>
+    .card {
+        margin-top: 50px;
+    }
+    .form-group label {
+        font-weight: bold;
+    }
+    .btn-block {
+        margin-top: 20px;
+    }
+    .text-center a {
+        color: #007bff;
+    }
+</style>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Connexion</h2>
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        Nom d'utilisateur ou mot de passe incorrect.
+                    </div>
+                    {% endif %}
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Nom d'utilisateur</label>
+                            <input type="text" name="username" class="form-control" id="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" name="password" class="form-control" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Vous n'avez pas de compte ? <a href="{% url 'register' %}">Inscrivez-vous</a></p>
+                    </div>
+                    <div class="text-center mt-2">
+                        <a href="{% url 'password_reset' %}">Mot de passe oublié ?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends '../index.html' %}
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+        <ul id="nav" class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="/" class="collapsed" aria-label="Toggle navigation">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'shop' %}" class="collapsed" aria-label="Toggle navigation">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" class="collapsed" aria-label="Toggle navigation">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'blog' %}" class="active" aria-label="Toggle navigation">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}" class="collapsed" aria-label="Toggle navigation">A propos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+{% block content %}
+<!-- Start Blog Grid -->
+<section class="blog-section pt-120 pb-120">
+    <div class="container">
+        <div class="row">
+            <!-- Main Blog Content -->
+            <div class="col-lg-8">
+                <div class="row">
+                    <!-- Boucle pour afficher les articles de blog -->
+                    {% for post in blog_posts %}
+                    <div class="col-md-6">
+                        <div class="blog-item">
+                            <div class="blog-thumb">
+                                {% if post.image %}
+                                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid">
+                                {% else %}
+                                <img src="https://via.placeholder.com/800x500" alt="Blog Image" class="img-fluid">
+                                {% endif %}
+                            </div>
+                            <div class="blog-content">
+                                <h3 class="blog-title">
+                                    <a href="{% url 'blog_single' post.id %}">{{ post.title }}</a>
+                                </h3>
+                                <p class="blog-excerpt">
+                                    {{ post.content|striptags|truncatewords:30 }}
+                                </p>
+                                <a href="{% url 'blog_single' post.id %}" class="read-more">Lire plus</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Pagination -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                {% if blog_posts.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ blog_posts.previous_page_number }}" aria-label="Précédent">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                {% for num in blog_posts.paginator.page_range %}
+                                <li class="page-item {% if blog_posts.number == num %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                                {% endfor %}
+
+                                {% if blog_posts.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ blog_posts.next_page_number }}" aria-label="Suivant">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+            <div class="sidebar">
+                <!-- Search Widget -->
+                <div class="widget search-widget">
+                    <h4 class="widget-title">Rechercher</h4>
+                    <form action="#" method="get">
+                        <input type="text" class="form-control" placeholder="Rechercher...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+                <!-- Categories Widget -->
+                <div class="widget categories-widget">
+                    <h4 class="widget-title">Catégories</h4>
+                    <ul>
+                        {% for value, label in categories.items %}
+                        <li>
+                            <a href="?category={{ value }}">{{ label }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- Recent Posts Widget -->
+                <div class="widget recent-posts-widget">
+                    <h4 class="widget-title">Posts récents</h4>
+                    <ul>
+                        {% for post in blog_posts|slice:":5" %}
+                        <li>
+                            <a href="{% url 'blog_single' post.id %}">{{ post.title }}</a>
+                            <span>{{ post.created_at|date:"d F Y" }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Blog Grid -->
+{% endblock content %}

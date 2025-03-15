@@ -1,0 +1,52 @@
+{% extends '../../index.html' %}
+
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+        <ul id="nav" class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="/" class="collapsed" aria-label="Toggle navigation">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'shop' %}" class="active" aria-label="Toggle navigation">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" class="collapsed" aria-label="Toggle navigation">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'blog' %}" class="collapsed" aria-label="Toggle navigation">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}" class="collapsed" aria-label="Toggle navigation">A propos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+
+{% block content %}
+<section class="checkout-section">
+    <div class="container">
+        <h2>Paiement</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="address">Adresse de livraison</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Confirmer la commande</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

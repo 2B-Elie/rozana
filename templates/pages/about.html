@@ -1,0 +1,174 @@
+{% extends '../index.html' %}
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+        <ul id="nav" class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="/" class="collapsed" aria-label="Toggle navigation">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'shop' %}" class="collapsed" aria-label="Toggle navigation">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" class="collapsed" aria-label="Toggle navigation">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'blog' %}" class="collapsed" aria-label="Toggle navigation">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}" class="active" aria-label="Toggle navigation">A propos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+{% block content %}
+{% load static %}
+<!-- Styles personnalisés pour la page "À propos" -->
+<style>
+    .about-section {
+        padding: 80px 0;
+        background-color: #f8f9fa;
+    }
+    .about-content {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    .about-content h2 {
+        color: rgb(31, 25, 117);
+        margin-bottom: 20px;
+    }
+    .about-content p {
+        color: #666;
+        margin-bottom: 20px;
+    }
+    .about-content ul {
+        list-style: none;
+        padding: 0;
+    }
+    .about-content ul li {
+        margin-bottom: 10px;
+        color: #666;
+    }
+    .about-content ul li i {
+        color: rgb(31, 25, 117);
+        margin-right: 10px;
+    }
+    .about-video img {
+        border-radius: 10px;
+        width: 100%;
+        height: auto;
+    }
+    .our-team {
+        background-color: #fff;
+        padding: 60px 0;
+        text-align: center;
+    }
+    .our-team h1 {
+        color: rgb(31, 25, 117);
+        margin-bottom: 40px;
+    }
+    .team-member {
+        margin-bottom: 30px;
+    }
+    .team-member img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 4px solid rgb(31, 25, 117);
+        margin-bottom: 15px;
+    }
+    .team-member h3 {
+        color: rgb(31, 25, 117);
+        margin-bottom: 10px;
+    }
+    .team-member p {
+        color: #666;
+        font-style: italic;
+    }
+</style>
+
+<!-- Start About Section -->
+<section class="about-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Video "À propos" -->
+            <div class="col-lg-4 col-md-4 col-12">
+                <div class="about-video">
+                    <img src="{% static 'logos/Rozana-logo2-removebg.png' %}" alt="Logo">
+                    <hr>
+                    <video controls style="width: 100%; border-radius: 10px;">
+                        <source src="{% static 'assets/deo/deo_about_1.mp4' %}" type="video/mp4">
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                    <hr>
+                </div>
+            </div>
+
+            <!-- Contenu "À propos" -->
+            <div class="col-lg-8 col-md-8 col-12">
+                <div class="about-content">
+                    <h2>À propos de Razana Healthy Cosmetics</h2>
+                    <p>Bienvenue chez <strong>Razana Healthy Cosmetics</strong>, votre référence en matière de cosmétiques naturels et bio. Nous nous engageons à vous offrir des produits de haute qualité, respectueux de votre peau et de l'environnement.</p>
+                    <p style="text-align: justify;">Fondée avec passion, notre entreprise a pour mission de promouvoir une beauté saine et responsable. Nous croyons fermement que prendre soin de soi ne devrait jamais compromettre la santé ou la planète. C'est pourquoi tous nos produits sont formulés à partir d'ingrédients naturels et biologiques, soigneusement sélectionnés pour leur efficacité et leur douceur.</p>
+                    <p style="text-align: justify;">Chez Razana Healthy Cosmetics, nous nous adressons aux femmes et aux hommes âgés de 18 à 45 ans, qui accordent une importance particulière à leur bien-être et à l'impact environnemental de leurs choix. Que vous cherchiez à nourrir votre peau, à renforcer vos cheveux ou à adopter une routine de soins plus écologique, nous avons ce qu'il vous faut.</p>
+                    <ul>
+                        <li><i class="lni lni-checkmark-circle"></i>Des produits 100% naturels et bio</li>
+                        <li><i class="lni lni-checkmark-circle"></i>Respectueux de l'environnement</li>
+                        <li><i class="lni lni-checkmark-circle"></i>Adaptés à tous les types de peau</li>
+                        <li><i class="lni lni-checkmark-circle"></i>Une beauté saine et responsable</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End About Section -->
+
+<!-- Start Our Team Section -->
+<section class="our-team">
+    <div class="container">
+        <h1>Notre équipe centrale</h1>
+        <div class="row">
+            <!-- Membre 1 -->
+            <div class="col-lg-3 col-md-6 col-12 team-member">
+                <img src="https://cdn4.vectorstock.com/i/1000x1000/35/68/person-icon-male-user-profile-avatar-vector-18833568.jpg" alt="Membre de l'équipe">
+                <h3>Nom complet</h3>
+                <p>Titre</p>
+            </div>
+            <!-- Membre 2 -->
+            <div class="col-lg-3 col-md-6 col-12 team-member">
+                <img src="https://cdn4.vectorstock.com/i/1000x1000/35/68/person-icon-male-user-profile-avatar-vector-18833568.jpg" alt="Membre de l'équipe">
+                <h3>Nom complet</h3>
+                <p>Titre</p>
+            </div>
+            <!-- Membre 3 -->
+            <div class="col-lg-3 col-md-6 col-12 team-member">
+                <img src="https://cdn4.vectorstock.com/i/1000x1000/35/68/person-icon-male-user-profile-avatar-vector-18833568.jpg" alt="Membre de l'équipe">
+                <h3>Nom complet</h3>
+                <p>Titre</p>
+            </div>
+            <!-- Membre 4 -->
+            <div class="col-lg-3 col-md-6 col-12 team-member">
+                <img src="https://cdn4.vectorstock.com/i/1000x1000/35/68/person-icon-male-user-profile-avatar-vector-18833568.jpg" alt="Membre de l'équipe">
+                <h3>Nom complet</h3>
+                <p>Titre</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Our Team Section -->
+{% endblock content %}

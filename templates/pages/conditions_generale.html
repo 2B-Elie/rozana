@@ -1,0 +1,177 @@
+{% extends '../index.html' %}
+
+{% load static %}
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+        <ul id="nav" class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="/" class="collapsed" aria-label="Toggle navigation">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'shop' %}" class="collapsed" aria-label="Toggle navigation">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" aria-label="Toggle navigation">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'blog' %}" class="collapsed" aria-label="Toggle navigation">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}" class="collapsed" aria-label="Toggle navigation">A propos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+{% block content %}
+<!-- Start CGV Section -->
+<section class="cgv-section section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title text-center">
+                    <h2>Conditions Générales de Vente (CGV)</h2>
+                    <p>Date de dernière mise à jour : __ Mars 2025</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="cgv-content">
+                    <!-- Objet -->
+                    <div class="cgv-item">
+                        <h4>1. Objet</h4>
+                        <p>Les présentes CGV définissent les droits et obligations des parties dans le cadre de la vente en ligne de produits cosmétiques naturels et bio proposés par Rozana Healthy Cosmetics.</p>
+                    </div>
+
+                    <!-- Produits -->
+                    <div class="cgv-item">
+                        <h4>2. Produits</h4>
+                        <ul>
+                            <li><strong>Description :</strong> Nos produits sont des cosmétiques naturels et biologiques, formulés à partir d'ingrédients respectueux de la peau et de l'environnement.</li>
+                            <li><strong>Disponibilité :</strong> Les produits sont proposés dans la limite des stocks disponibles. En cas de rupture de stock, nous vous informerons par e-mail et vous proposerons un remboursement ou un produit alternatif.</li>
+                            <li><strong>Prix :</strong> Les prix sont indiqués en Franc CFA et incluent la TVA. Ils peuvent être révisés à tout moment, mais les commandes déjà validées restent au prix en vigueur au moment de la commande.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Commandes -->
+                    <div class="cgv-item">
+                        <h4>3. Commandes</h4>
+                        <ul>
+                            <li><strong>Passation de commande :</strong> Pour passer commande, vous devez créer un compte ou commander en tant qu'invité. Vous devrez fournir des informations exactes et complètes.</li>
+                            <li><strong>Validation :</strong> La commande est validée une fois le paiement accepté. Vous recevrez un e-mail de confirmation.</li>
+                            <li><strong>Erreurs :</strong> En cas d'erreur dans la commande (produit, quantité, prix), contactez-nous immédiatement à <a href="mailto:support@rozana.com">support@rozana.com</a>.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Paiement -->
+                    <div class="cgv-item">
+                        <h4>4. Paiement</h4>
+                        <ul>
+                            <li><strong>Modes de paiement :</strong> Nous acceptons les cartes de crédit/débit (Visa, Mastercard, etc.), PayPal et autres modes de paiement sécurisés.</li>
+                            <li><strong>Sécurité :</strong> Toutes les transactions sont cryptées pour garantir la confidentialité de vos données.</li>
+                            <li><strong>Paiement refusé :</strong> En cas de refus de paiement, la commande sera annulée.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Livraison -->
+                    <div class="cgv-item">
+                        <h4>5. Livraison</h4>
+                        <ul>
+                            <li><strong>Délais :</strong> Les délais de livraison sont indiqués lors de la commande. Ils varient en fonction du mode de livraison choisi et de votre localisation.</li>
+                            <li><strong>Frais de livraison :</strong> Les frais de livraison sont calculés en fonction du poids du colis et de la destination.</li>
+                            <li><strong>Suivi :</strong> Vous recevrez un numéro de suivi une fois votre commande expédiée.</li>
+                            <li><strong>Retard ou perte :</strong> En cas de retard ou de perte du colis, contactez-nous pour que nous trouvions une solution.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Retours et Remboursements -->
+                    <div class="cgv-item">
+                        <h4>6. Retours et Remboursements</h4>
+                        <ul>
+                            <li><strong>Politique de retour :</strong> Consultez notre <a href="{% url 'politique_retour' %}">Politique de Retour</a> pour plus de détails sur les conditions de retour et de remboursement.</li>
+                            <li><strong>Délai :</strong> Vous disposez de 15 jours à compter de la réception pour retourner un produit non utilisé et dans son emballage d'origine.</li>
+                            <li><strong>Remboursement :</strong> Le remboursement sera effectué sous 14 jours ouvrables après réception et inspection du retour.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Garantie et Responsabilité -->
+                    <div class="cgv-item">
+                        <h4>7. Garantie et Responsabilité</h4>
+                        <ul>
+                            <li><strong>Qualité des produits :</strong> Nous nous engageons à fournir des produits de haute qualité, conformes à leurs descriptions.</li>
+                            <li><strong>Limitation de responsabilité :</strong> Rozana Healthy Cosmetics ne peut être tenue responsable des dommages indirects (perte de données, perte de chiffre d'affaires, etc.) résultant de l'utilisation de nos produits.</li>
+                            <li><strong>Défauts :</strong> En cas de produit défectueux, contactez-nous immédiatement pour un échange ou un remboursement.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Données Personnelles -->
+                    <div class="cgv-item">
+                        <h4>8. Données Personnelles</h4>
+                        <ul>
+                            <li><strong>Collecte :</strong> Nous collectons vos données personnelles (nom, adresse, e-mail, etc.) pour traiter votre commande et améliorer votre expérience.</li>
+                            <li><strong>Confidentialité :</strong> Vos données ne seront jamais vendues ou partagées avec des tiers sans votre consentement. Consultez notre <a href="#">Politique de Confidentialité</a> pour plus de détails.</li>
+                            <li><strong>Droits :</strong> Vous avez le droit d'accéder, de modifier ou de supprimer vos données à tout moment en nous contactant à <a href="mailto:privacy@rozana.com">privacy@rozana.com</a>.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Propriété Intellectuelle -->
+                    <div class="cgv-item">
+                        <h4>9. Propriété Intellectuelle</h4>
+                        <ul>
+                            <li><strong>Contenu :</strong> Tous les éléments du site (textes, images, logos, etc.) sont la propriété exclusive de Rozana Healthy Cosmetics et sont protégés par les lois sur la propriété intellectuelle.</li>
+                            <li><strong>Utilisation :</strong> Toute reproduction, modification ou utilisation sans autorisation est strictement interdite.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Résiliation -->
+                    <div class="cgv-item">
+                        <h4>10. Résiliation</h4>
+                        <p>Rozana Healthy Cosmetics se réserve le droit de résilier ou de suspendre votre accès au site en cas de non-respect des présentes CGV.</p>
+                    </div>
+
+                    <!-- Litiges -->
+                    <div class="cgv-item">
+                        <h4>11. Litiges</h4>
+                        <ul>
+                            <li><strong>Loi applicable :</strong> Les présentes CGV sont régies par les lois de la République du Tchad.</li>
+                            <li><strong>Médiation :</strong> En cas de litige, nous privilégions une résolution amiable. Si aucun accord n'est trouvé, le litige sera soumis aux tribunaux compétents de [ville/région].</li>
+                        </ul>
+                    </div>
+
+                    <!-- Modifications des CGV -->
+                    <div class="cgv-item">
+                        <h4>12. Modifications des CGV</h4>
+                        <p>Rozana Healthy Cosmetics se réserve le droit de modifier les présentes CGV à tout moment. Les nouvelles conditions seront applicables dès leur mise en ligne sur le site.</p>
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="cgv-item">
+                        <h4>13. Contact</h4>
+                        <p>Pour toute question concernant nos CGV, contactez-nous à :</p>
+                        <ul>
+                            <li><strong>E-mail :</strong> <a href="mailto:support@rozana.com">support@rozana.com</a></li>
+                            <li><strong>Adresse :</strong>Rue du Lycée Féminin, Collé à la Station SOPETRANS, Amriguébé 657, N'Djamena, Tchad</li>
+                            <li><strong>Téléphone :</strong> +235 {{ contact_info.phone_number }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End CGV Section -->
+{% endblock %}

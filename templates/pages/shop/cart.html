@@ -1,0 +1,153 @@
+{% extends '../../index.html' %}
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+        <ul id="nav" class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="/" class="collapsed" aria-label="Toggle navigation">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'shop' %}" class="active" aria-label="Toggle navigation">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" class="collapsed" aria-label="Toggle navigation">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'blog' %}" class="collapsed" aria-label="Toggle navigation">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}" class="collapsed" aria-label="Toggle navigation">A propos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+{% block content %}
+<style>
+    .cart-section {
+        padding: 60px 0;
+    }
+    .cart-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .cart-table th,
+    .cart-table td {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        text-align: center;
+    }
+    .cart-table th {
+        background-color: #f8f9fa;
+    }
+    .product-info {
+        display: flex;
+        align-items: center;
+    }
+    .product-info img {
+        width: 80px;
+        height: 80px;
+        margin-right: 15px;
+    }
+    .quantity input {
+        width: 60px;
+        text-align: center;
+    }
+    .cart-summary {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+    }
+    .summary-table {
+        list-style: none;
+        padding: 0;
+    }
+    .summary-table li {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+    .cart-buttons {
+        margin-top: 20px;
+    }
+    .cart-buttons .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+</style>
+<!-- Start Cart Area -->
+<section class="cart-section pt-120 pb-120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Produit</th>
+                                <th>Prix</th>
+                                <th>Quantité</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart_items %}
+                            <tr>
+                                <td>
+                                    <div class="product-info">
+                                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid">
+                                        <h4><a href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a></h4>
+                                    </div>
+                                </td>
+                                <td>{{ item.product.price }} XOF</td>
+                                <td>
+                                    <div class="quantity">
+                                        <form action="{% url 'update_cart' item.id %}" method="post" class="d-flex">
+                                            {% csrf_token %}
+                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control">
+                                            <button type="submit" class="btn btn-sm btn-primary">Mettre à jour</button>
+                                        </form>
+                                    </div>
+                                </td>
+                                <td>{{ item.total_price }} XOF</td>
+                                <td>
+                                    <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart-summary">
+                    <h3>Récapitulatif du panier</h3>
+                    <ul class="summary-table">
+                        <li><span>Sous-total :</span> <span>{{ cart_total }} XOF</span></li>
+                        <li><span>Livraison :</span> <span>Gratuite</span></li>
+                        <li><span>Total :</span> <span>{{ cart_total }} XOF</span></li>
+                    </ul>
+                    <div class="cart-buttons">
+                        <a href="{% url 'shop' %}" class="btn btn-secondary">Continuer vos achats</a>
+                        <a href="{% url 'checkout' %}" class="btn btn-primary">Passer la commande</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Cart Area -->
+{% endblock %}

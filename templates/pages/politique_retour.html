@@ -1,0 +1,132 @@
+{% extends '../index.html' %}
+
+{% load static %}
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+        <ul id="nav" class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="/" class="collapsed" aria-label="Toggle navigation">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'shop' %}" class="collapsed" aria-label="Toggle navigation">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" aria-label="Toggle navigation">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'blog' %}" class="collapsed" aria-label="Toggle navigation">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}" class="collapsed" aria-label="Toggle navigation">A propos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+{% block content %}
+<!-- Start Politique de Retour Section -->
+<section class="return-policy-section section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title text-center">
+                    <h2>Politique de Retour</h2>
+                    <p>Chez Rozana Healthy Cosmetics, nous nous engageons à vous offrir une expérience d'achat satisfaisante et respectueuse de l'environnement.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="return-policy-content">
+                    <!-- Délai de Retour -->
+                    <div class="policy-item">
+                        <h4>1. Délai de Retour</h4>
+                        <p>Vous disposez de <strong>15 jours</strong> à compter de la date de réception de votre commande pour demander un retour ou un échange. Passé ce délai, nous ne pourrons malheureusement pas accepter votre demande.</p>
+                    </div>
+
+                    <!-- Conditions de Retour -->
+                    <div class="policy-item">
+                        <h4>2. Conditions de Retour</h4>
+                        <p>Pour être éligible à un retour ou à un échange, les produits doivent être :</p>
+                        <ul>
+                            <li><strong>Non utilisés :</strong> Les produits doivent être dans leur emballage d'origine, scellé et intact.</li>
+                            <li><strong>En parfait état :</strong> Les articles doivent être retournés dans leur état d'origine, sans dommage ni altération.</li>
+                            <li><strong>Accompagnés du bon de commande :</strong> Veuillez inclure une copie de votre facture ou du numéro de commande.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Procédure de Retour -->
+                    <div class="policy-item">
+                        <h4>3. Procédure de Retour</h4>
+                        <ol>
+                            <li><strong>Contactez-nous :</strong> Envoyez-nous un e-mail à <a href="mailto:support@rozana.com">support@rozana.com</a> ou contactez-nous via notre formulaire en ligne en indiquant votre numéro de commande et la raison de votre retour.</li>
+                            <li><strong>Instructions de retour :</strong> Nous vous enverrons les instructions pour retourner le produit, y compris l'adresse de retour.</li>
+                            <li><strong>Expédition du colis :</strong> Une fois le colis expédié, veuillez nous fournir le numéro de suivi pour que nous puissions suivre votre retour.</li>
+                        </ol>
+                    </div>
+
+                    <!-- Options de Retour -->
+                    <div class="policy-item">
+                        <h4>4. Options de Retour</h4>
+                        <ul>
+                            <li><strong>Remboursement :</strong> Une fois le retour reçu et inspecté, nous vous rembourserons le montant de votre achat (hors frais de livraison initiaux) via votre méthode de paiement d'origine.</li>
+                            <li><strong>Échange :</strong> Si vous souhaitez échanger un produit, nous vous enverrons le nouvel article dès réception du retour.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Frais de Retour -->
+                    <div class="policy-item">
+                        <h4>5. Frais de Retour</h4>
+                        <ul>
+                            <li>Les frais de retour sont à la charge du client, sauf en cas d'erreur de notre part (produit défectueux ou incorrect).</li>
+                            <li>Nous encourageons l'utilisation de modes d'expédition respectueux de l'environnement pour retourner vos articles.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Produits Non Éligibles -->
+                    <div class="policy-item">
+                        <h4>6. Produits Non Éligibles</h4>
+                        <p>Pour des raisons d'hygiène et de sécurité, certains produits ne peuvent pas être retournés :</p>
+                        <ul>
+                            <li>Les produits ouverts ou partiellement utilisés.</li>
+                            <li>Les produits personnalisés ou fabriqués sur commande.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Retours Internationaux -->
+                    <div class="policy-item">
+                        <h4>7. Retours Internationaux</h4>
+                        <p>Si vous résidez en dehors de notre pays d'expédition, veuillez nous contacter avant de retourner un produit. Les frais de douane et de retour internationaux sont à la charge du client.</p>
+                    </div>
+
+                    <!-- Engagement Écologique -->
+                    <div class="policy-item">
+                        <h4>8. Engagement Écologique</h4>
+                        <p>Chez Rozana, nous nous engageons à minimiser notre impact environnemental. Si vous retournez un produit, nous nous efforcerons de recycler ou de réutiliser les emballages et les articles dans la mesure du possible.</p>
+                    </div>
+
+                    <!-- Questions -->
+                    <div class="policy-item">
+                        <h4>9. Questions ?</h4>
+                        <p>Pour toute question concernant notre politique de retour, n'hésitez pas à nous contacter à <a href="mailto:support@rozana.com">support@rozana.com</a> ou via notre service client en ligne. Nous sommes là pour vous aider !</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Politique de Retour Section -->
+{% endblock %}

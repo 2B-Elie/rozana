@@ -1,0 +1,261 @@
+{% extends '../index.html' %}
+
+{% load static %}
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+        <ul id="nav" class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="/" class="collapsed" aria-label="Toggle navigation">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'shop' %}" class="collapsed" aria-label="Toggle navigation">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" aria-label="Toggle navigation">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'blog' %}" class="collapsed" aria-label="Toggle navigation">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}" class="collapsed" aria-label="Toggle navigation">A propos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+{% block content %}
+<!-- Start FAQ Section -->
+<section class="faq-section section-padding">
+    <div class="">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title text-center">
+                    <h2>-FAQs-Vous n'avez pas trouvé la réponse ?</h2>
+                    <p>Posez-nous votre question. <br> Nous répondons normalement dans les deux jours ouvrables. Les questions les plus fréquentes apparaissent sur cette page.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <!-- FAQ Accordion -->
+                <div class="accordion" id="faqAccordion">
+                    <!-- Produits -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingProduits">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProduits" aria-expanded="true" aria-controls="collapseProduits">
+                                Produits
+                            </button>
+                        </h2>
+                        <div id="collapseProduits" class="accordion-collapse collapse show" aria-labelledby="headingProduits" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <div class="faq-question">
+                                    <h5>Q1 : Vos produits sont-ils vraiment 100% naturels et bio ?</h5>
+                                    <p>Oui, tous nos produits sont formulés à partir d'ingrédients naturels et biologiques, soigneusement sélectionnés pour leur efficacité et leur respect de l'environnement. Ils sont certifiés par _____.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q2 : Vos produits sont-ils testés sur les animaux ?</h5>
+                                    <p>Non, Rozana Healthy Cosmetics est une marque cruelty-free. Nous ne testons aucun de nos produits sur les animaux.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q3 : Vos produits conviennent-ils à tous les types de peau ?</h5>
+                                    <p>Oui, nos produits sont conçus pour être doux et adaptés à tous les types de peau, y compris les peaux sensibles. Cependant, nous vous recommandons de consulter la description de chaque produit pour plus de détails.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q4 : Où sont fabriqués vos produits ?</h5>
+                                    <p>Nos produits sont fabriqués en Turquie, dans des installations respectant les normes les plus strictes de qualité et d'éthique.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commandes et Paiement -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingCommandes">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCommandes" aria-expanded="false" aria-controls="collapseCommandes">
+                                Commandes et Paiement
+                            </button>
+                        </h2>
+                        <div id="collapseCommandes" class="accordion-collapse collapse" aria-labelledby="headingCommandes" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <div class="faq-question">
+                                    <h5>Q5 : Comment passer commande ?</h5>
+                                    <p>Il vous suffit de parcourir notre catalogue, d'ajouter les produits de votre choix à votre panier, puis de suivre les étapes de paiement sécurisé.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q6 : Quels modes de paiement acceptez-vous ?</h5>
+                                    <p>Nous acceptons les cartes de crédit/débit (Visa, Mastercard, etc.), PayPal et autres modes de paiement comme Airtel Money et Moov Money sécurisés.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q7 : Puis-je modifier ou annuler ma commande après l'avoir passée ?</h5>
+                                    <p>Vous pouvez modifier ou annuler votre commande tant qu'elle n'a pas été expédiée. Contactez-nous immédiatement à support@rozana.com.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Livraison -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingLivraison">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLivraison" aria-expanded="false" aria-controls="collapseLivraison">
+                                Livraison
+                            </button>
+                        </h2>
+                        <div id="collapseLivraison" class="accordion-collapse collapse" aria-labelledby="headingLivraison" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <div class="faq-question">
+                                    <h5>Q8 : Quels sont les délais de livraison ?</h5>
+                                    <p>Les délais de livraison varient en fonction de votre localisation et du mode de livraison choisi. Ils sont indiqués lors de la validation de votre commande.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q9 : Proposez-vous la livraison internationale ?</h5>
+                                    <p>Oui, nous livrons dans plusieurs pays. Les frais et délais de livraison internationaux sont calculés lors de la commande.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q10 : Puis-je suivre ma commande ?</h5>
+                                    <p>Oui, vous recevrez un numéro de suivi par e-mail une fois votre commande expédiée.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Retours et Remboursements -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingRetours">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRetours" aria-expanded="false" aria-controls="collapseRetours">
+                                Retours et Remboursements
+                            </button>
+                        </h2>
+                        <div id="collapseRetours" class="accordion-collapse collapse" aria-labelledby="headingRetours" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <div class="faq-question">
+                                    <h5>Q11 : Quelle est votre politique de retour ?</h5>
+                                    <p>Vous disposez de 5 jours (2 jours pour ceux qui ne sont à N'Djamena) à compter de la réception pour retourner un produit non utilisé et dans son emballage d'origine. Consultez notre Politique de Retour pour plus de détails.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q12 : Combien de temps faut-il pour être remboursé ?</h5>
+                                    <p>Une fois le retour reçu et inspecté, le remboursement est effectué sous 14 jours ouvrables.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q13 : Qui paie les frais de retour ?</h5>
+                                    <p>Les frais de retour sont à la charge du client, sauf en cas d'erreur de notre part (produit défectueux ou incorrect).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Utilisation des Produits -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingUtilisation">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUtilisation" aria-expanded="false" aria-controls="collapseUtilisation">
+                                Utilisation des Produits
+                            </button>
+                        </h2>
+                        <div id="collapseUtilisation" class="accordion-collapse collapse" aria-labelledby="headingUtilisation" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <div class="faq-question">
+                                    <h5>Q14 : Comment conserver mes produits Rozana ?</h5>
+                                    <p>Nous recommandons de conserver les produits dans un endroit frais et sec, à l'abri de la lumière directe du soleil.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q15 : Puis-je utiliser vos produits si je suis enceinte ou allaitante ?</h5>
+                                    <p>La plupart de nos produits sont sûrs, mais nous vous conseillons de consulter un professionnel de santé avant utilisation.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q16 : Que faire en cas de réaction cutanée ?</h5>
+                                    <p>Arrêtez immédiatement l'utilisation du produit et consultez un dermatologue. Contactez-nous à support@rozana.com pour un retour ou un échange.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Engagements et Éthique -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingEngagements">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEngagements" aria-expanded="false" aria-controls="collapseEngagements">
+                                Engagements et Éthique
+                            </button>
+                        </h2>
+                        <div id="collapseEngagements" class="accordion-collapse collapse" aria-labelledby="headingEngagements" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <div class="faq-question">
+                                    <h5>Q17 : Comment Rozana s’engage-t-elle pour l'environnement ?</h5>
+                                    <p>Nous utilisons des emballages recyclables, des ingrédients durables et nous nous efforçons de réduire notre empreinte carbone à chaque étape de notre production.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q18 : Soutenez-vous des causes sociales ou environnementales ?</h5>
+                                    <p>Oui, nous soutenons régulièrement des initiatives en faveur de l'environnement et des communautés locales. Consultez notre page Engagements pour en savoir plus.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Compte et Confidentialité -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingCompte">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCompte" aria-expanded="false" aria-controls="collapseCompte">
+                                Compte et Confidentialité
+                            </button>
+                        </h2>
+                        <div id="collapseCompte" class="accordion-collapse collapse" aria-labelledby="headingCompte" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <div class="faq-question">
+                                    <h5>Q19 : Comment créer un compte ?</h5>
+                                    <p>Cliquez sur "Créer un compte" en haut de la page, puis suivez les instructions. Un compte vous permet de suivre vos commandes et de gérer vos informations personnelles.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q20 : Comment supprimer mon compte ?</h5>
+                                    <p>Contactez-nous à privacy@rozana.com et nous procéderons à la suppression de votre compte et de vos données.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q21 : Mes données sont-elles sécurisées ?</h5>
+                                    <p>Oui, nous utilisons des technologies de cryptage pour protéger vos données personnelles. Consultez notre Politique de Confidentialité pour plus de détails.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Autres Questions -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingAutres">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAutres" aria-expanded="false" aria-controls="collapseAutres">
+                                Autres Questions
+                            </button>
+                        </h2>
+                        <div id="collapseAutres" class="accordion-collapse collapse" aria-labelledby="headingAutres" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <div class="faq-question">
+                                    <h5>Q22 : Puis-je acheter vos produits en magasin ?</h5>
+                                    <p>Nos produits sont disponibles en ligne sur notre site et dans certains points de vente partenaires. Consultez notre page Points de Vente pour trouver un magasin près de chez vous.</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q23 : Proposez-vous des échantillons ?</h5>
+                                    <p>Oui, nous offrons des échantillons avec certaines commandes ou lors d'événements spéciaux. Restez à l'affût de nos promotions !</p>
+                                </div>
+                                <div class="faq-question">
+                                    <h5>Q24 : Comment contacter le service client ?</h5>
+                                    <p>Vous pouvez nous contacter par e-mail à support@rozana.com ou via notre formulaire de contact en ligne. Nous répondons sous 24 à 48 heures.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+<!-- End FAQ Section -->
+{% endblock %}

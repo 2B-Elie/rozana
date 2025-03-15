@@ -1,0 +1,148 @@
+{% extends '../index.html' %}
+{% load static %}
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+        <span class="toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+        <ul id="nav" class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a href="/" class="collapsed" aria-label="Toggle navigation">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'shop' %}" class="collapsed" aria-label="Toggle navigation">Boutique</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'contact' %}" class="active" aria-label="Toggle navigation">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'blog' %}" class="collapsed" aria-label="Toggle navigation">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'about' %}" class="collapsed" aria-label="Toggle navigation">A propos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+
+{% block content %}
+    <!-- Styles personnalisés pour la page de contact -->
+    <style>
+        .contact-section {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+        .contact-info {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .contact-info h3 {
+            color: rgb(31, 25, 117);
+            margin-bottom: 20px;
+        }
+        .contact-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .contact-info i {
+            color: rgb(31, 25, 117);
+            margin-right: 10px;
+        }
+        .contact-form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form h3 {
+            color: rgb(31, 25, 117);
+            margin-bottom: 20px;
+        }
+        .contact-form .form-control {
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .contact-form .btn-primary {
+            background-color: rgb(31, 25, 117);
+            border-color: rgb(31, 25, 117);
+        }
+        .contact-form .btn-primary:hover {
+            background-color: rgb(41, 35, 137);
+            border-color: rgb(41, 35, 137);
+        }
+    </style>
+</head>
+<body>
+    <!-- Start Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="row">
+                <!-- Informations de contact -->
+                <div class="col-lg-4 col-md-4 col-12 mb-4 pb-4">
+                    <div class="contact-info card">
+                        <img src="{% static 'logos/Rozana-logo2-removebg.png' %}" alt="Logo">
+                        <hr>
+                        <p><i class="lni lni-map-marker"></i>Rue du Lycée Féminin, Station SOPETRANS, Amriguébé 657, N'Djamena, Tchad</p>
+                        <p><i class="lni lni-phone"></i>+235 {{ contact_info.phone_number }}</p>
+                        <p><i class="lni lni-envelope"></i>{{ contact_info.email }}</p>
+                        <p><i class="lni lni-timer"></i>Du lundi au Dimanche : 7h00 - 23h00</p>
+                    </div>
+                </div>
+
+                <!-- Formulaire de contact -->
+                <div class="col-lg-8 col-md-8 col-12">
+                    <div class="contact-form card">
+                        <h3>Envoyez-nous un message</h3>
+
+                        <!-- Affichage des messages de succès -->
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    {{ form.name }}
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    {{ form.email }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form.subject }}
+                                </div>
+                                <div class="col-12">
+                                    {{ form.message }}
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Envoyer un message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- End Contact Section -->
+</body>
+</html>
+
+{% endblock content %}

@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rozana Healthy Cosmetics - Produits cosmétiques naturels et sains pour une beauté éclatante.">
+    <title>Rozana Healthy Cosmetics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .nav-link {
+            color:rgb(31, 25, 117) !important;
+        }
+        .nav-link:hover {
+            text-decoration: none;
+        }
+        .shopping-item {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+            width: 300px;
+            right: 5%;
+            border-radius: 8px;
+        }
+        .cart-items.active .shopping-item {
+            display: block;
+        }
+        .total-items {
+            color: red;
+            font-weight: bold;
+        }
+        li a{
+            text-decoration: none;
+            color: inherit;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'logos/Rozana-logo2-removebg.png' %}" alt="Logo Rozana Healthy Cosmetics" height="80">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}"><i class="fa fa-home"></i> Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-shopping-cart"></i> Boutique</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-envelope"></i> Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-blog"></i> Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-info-circle"></i> À propos</a>
+                    </li>
+                    <li class="nav-item navbar-cart">
+                        <div class="cart-items">
+                            <a href="javascript:void(0)" class="nav-link cart-toggle">
+                                <i class="fa fa-cart-plus"></i> Panier
+                                <span class="total-items">3</span>
+                            </a>
+                            <div class="shopping-item">
+                                <div class="dropdown-cart-header">
+                                    <span>3 Articles</span>
+                                    <a href="#">Voir le Panier</a>
+                                </div>
+                                <ul class="shopping-list">
+                                    <li>
+                                        <a href="javascript:void(0)" class="remove" title="Retirer cet article">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                        <div class="cart-img-head">
+                                            <a class="cart-img" href="#">
+                                                <img src="https://via.placeholder.com/50" alt="Produit 1">
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <h4><a href="#">Produit 1</a></h4>
+                                            <p class="quantity"><span class="amount">10 USD</span></p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)" class="remove" title="Retirer cet article">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                        <div class="cart-img-head">
+                                            <a class="cart-img" href="#">
+                                                <img src="https://via.placeholder.com/50" alt="Produit 2">
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <h4><a href="#">Produit 2</a></h4>
+                                            <p class="quantity"><span class="amount">15 USD</span></p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="bottom">
+                                    <div class="total">
+                                        <span>Total</span>
+                                        <span class="total-amount">25 USD</span>
+                                    </div>
+                                    <div class="button">
+                                        <a href="#" class="btn btn-primary">Paiement</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-center text-lg-start text-white">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Rozana Healthy Cosmetics</h5>
+                    <p>
+                        Votre destination pour des produits cosmétiques sains et naturels.
+                    </p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Liens utiles</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="#" class="text-white">FAQ</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white">Conditions générales</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white">Politique de retour</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white">Mentions légales</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Contact</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="mailto:{{ contact_info.email }}" class="text-white"><i class="fa fa-envelope"></i> {{ contact_info.email }}</a>
+                        </li>
+                        <li>
+                            <a href="tel:{{ contact_info.phone_number }}" class="text-white"><i class="fa fa-phone"></i> {{ contact_info.phone_number }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ contact_info.google_maps_location }}" class="text-white" target="_blank" rel="noopener noreferrer"><i class="fa fa-map-marker-alt"></i> Localisation</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            <p>Suivez-nous :</p>
+            <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+            <br>
+            © <span id="year"></span> Rozana Healthy Cosmetics
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+        
+        document.querySelector('.cart-toggle').addEventListener('click', function() {
+            document.querySelector('.cart-items').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,665 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Rozana Healthy Cosmetics</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'logos/Rozana-logo2-removebg.png' %}" />
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/LineIcons.3.0.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/tiny-slider.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/glightbox.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+    <!-- Styles personnalisés pour la nouvelle couleur -->
+    <style>
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .greeting {
+            font-weight: bold;
+        }
+
+        .logout-link, .login-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .logout-link:hover, .login-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-inner">
+            <div class="preloader-icon">
+                <span></span>
+                    <img src="{% static 'logos/Rozana-logo2-removebg.png' %}" alt="Logo">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- /End Preloader -->
+
+    <!-- Start Header Area -->
+    <header class="header navbar-area">
+        <!-- Start Topbar -->
+        <div class="topbar">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 col-md-4 col-12">
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="top-middle">
+                            <ul class="useful-links">
+                                <li><a href="/">Accueil</a></li>
+                                <li><a href="{% url 'about' %}">A propos de nous</a></li>
+                                <li><a href="{% url 'contact' %}">Contacts</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="top-end">
+                            {% if user.is_authenticated %}  
+                                <div class="user">
+                                    <span style="font-size: large;">
+                                        <i class="lni lni-user"></i>
+                                        Bonjour, {{ user.username }}   |
+                                    </span>
+                                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-link" style="padding: 0; border: none; background: none; color: #9b2820; text-decoration: none; font-size: large; font-style: italic; font-weight: bold;">Déconnexion</button>
+                                    </form>
+                                </div>    
+                            {% else %}
+                                <ul class="user-login">
+                                    <li>
+                                        <a href="{% url 'login' %}">Connexion</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'register' %}">Créer compte</a>
+                                    </li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Topbar -->
+        <!-- Start Header Middle -->
+        <div class="header-middle">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-3 col-7">
+                        <!-- Start Header Logo -->
+                        <a class="navbar-brand" href="index.html">
+                            <img src="{% static 'logos/Rozana-logo2-removebg.png' %}" alt="Logo">
+                        </a>
+                        <!-- End Header Logo -->
+                    </div>
+                    <div class="col-lg-5 col-md-7 d-xs-none">
+                        <!-- Start Main Menu Search -->
+                        <div class="main-menu-search">
+                            <!-- navbar search start -->
+                            <div class="navbar-search search-style-5">
+                                <div class="search-select">
+                                    <div class="select-position">
+                                        <select id="select1">
+                                            <option selected>Tout</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="search-input">
+                                    <input type="text" placeholder="Search">
+                                </div>
+                                <div class="search-btn">
+                                    <button style="background-color: rgb(41, 35, 137);"><i class="lni lni-search-alt"></i></button>
+                                </div>
+                            </div>
+                            <!-- navbar search Ends -->
+                        </div>
+                        <!-- End Main Menu Search -->
+                    </div>
+                    <div class="col-lg-4 col-md-2 col-5">
+                        <div class="middle-right-area">
+                            <div class="nav-hotline">
+                                <i class="lni lni-phone"></i>
+                                <h3>Hotline:
+                                    <span>(+235) {{ contact_info.phone_number }}</span>
+                                </h3>
+                            </div>
+                            <div class="navbar-cart">
+                                <div class="cart-items">
+                                    <a href="{% url 'cart' %}" class="main-btn">
+                                        <i class="lni lni-cart"></i>
+                                        <span class="total-items">{{ cart_items|length }}</span>
+                                    </a>
+                                    <!-- Shopping Item -->
+                                    <div class="shopping-item">
+                                        <div class="dropdown-cart-header">
+                                            <span>{{ cart_items|length }} Articles</span>
+                                            <a href="{% url 'cart' %}">Voir le panier</a>
+                                        </div>
+                                        <ul class="shopping-list">
+                                            {% for item in cart_items %}
+                                            <li>
+                                                <a href="{% url 'remove_from_cart' item.id %}" class="remove" title="Supprimer cet article">
+                                                    <i class="lni lni-close"></i>
+                                                </a>
+                                                <div class="cart-img-head">
+                                                    <a class="cart-img" href="{% url 'product_detail' item.product.id %}">
+                                                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <h4><a href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a></h4>
+                                                    <p class="quantity">{{ item.quantity }}x - <span class="amount">{{ item.product.price }} XOF</span></p>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                        <div class="bottom">
+                                            <div class="total">
+                                                <span>Total</span>
+                                                <span class="total-amount">{{ cart_total }} XOF</span>
+                                            </div>
+                                            <div class="button">
+                                                <a href="{% url 'checkout' %}" class="btn animate">Passer la commande</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/ End Shopping Item -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Header Middle -->
+        <!-- Start Header Bottom -->
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 col-md-6 col-12">
+                    <div class="nav-inner">
+                    <!-- Start Mega Category Menu -->
+                    <div class="mega-category-menu">
+                        <span class="cat-button"><i class="lni lni-menu"></i>Toutes les catégories</span>
+                        <ul class="sub-category">
+                            {% for category in categories %}
+                            <li>
+                                <a href="{% url 'shop' %}?category={{ category.id }}">{{ category.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <!-- End Mega Category Menu -->
+
+                        {% block navbar %}
+                        <!-- Start Navbar -->
+                        <nav class="navbar navbar-expand-lg">
+                            <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                                <span class="toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+                                <ul id="nav" class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a href="/" class="active" aria-label="Toggle navigation">Accueil</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{% url 'shop' %}" class="collapsed" aria-label="Toggle navigation">Boutique</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{% url 'contact' %}" class="collapsed"  aria-label="Toggle navigation">Contacts</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{% url 'blog' %}" class="collapsed" aria-label="Toggle navigation">Blog</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{% url 'about' %}" aria-label="Toggle navigation">A propos</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <!-- End Navbar -->
+                        {% endblock navbar %}
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- Start Nav Social -->
+                    <div class="nav-social">
+                        <h5 class="title">Suivez nous sur:</h5>
+                        <ul>
+                            <li>
+                                <a href="https://www.facebook.com/profile.php?id=61574199744739&mibextid=rS40aB7S9Ucbxw6v" target=_blanck><i class="lni lni-facebook-filled"></i></a>
+                            </li>
+                            <li>
+                                <a href="https://www.tiktok.com/@rozana.healthy.cosmetic?_t=ZN-8uhhd0BMh4o&_r=1" target=_blanck><i class="lni lni-tiktok"></i></a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/rozanahealthycosmetictchad/profilecard/?igsh=aG90aGlzdDM1ZzNy" target=_blanck><i class="lni lni-instagram"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Nav Social -->
+                </div>
+            </div>
+        </div>
+        <!-- End Header Bottom -->
+    </header>
+    <!-- End Header Area -->
+         <!-- Afficher les messages -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% block content %}
+
+    <!-- Start Hero Area -->
+    <section class="hero-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-12 custom-padding-right">
+                    <div class="slider-head">
+                        <!-- Start Hero Slider -->
+                        <div class="hero-slider">
+                            {% for image in carousel_images %}
+                            <!-- Start Single Slider -->
+                            <div class="single-slider"
+                                style="background-image: url('{{ image.image.url }}');">
+                                <div class="content">
+
+                                </div>
+                            </div>
+                            <!-- End Single Slider -->
+                            {% endfor %}
+                        </div>
+                        <!-- End Hero Slider -->
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 col-12 md-custom-padding">
+                            <!-- Start Small Banner -->
+                            <div class="hero-small-banner"
+                                style="background-image: url('{% static 'assets/images/primo.jpeg' %}');">
+                                <div class="content">
+
+                                </div>
+                            </div>
+                            <!-- End Small Banner -->
+                        </div>
+                        <div class="col-lg-12 col-md-6 col-12">
+                            <!-- Start Small Banner -->
+                            <div class="hero-small-banner style2">
+                                <div class="content">
+                                    <h2>Du nouveau</h2>
+                                    <p>Pour rester informé des nouveautés, abonnez-vous à notre newsletter</p>
+                                    <!-- <div class="button">
+                                        <a class="btn" href="#">S'abonner</a>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <!-- Start Small Banner -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Hero Area -->
+
+    <!-- Start Trending Product Area -->
+    <section class="trending-product section" style="margin-top: 12px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>Produits tendances</h2>
+                        <p>Découvrez nos produits les plus en vogue, soigneusement sélectionnés pour répondre à vos besoins et envies du moment !</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for product in latest_products %}
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" height="250px">
+                            <div class="button">
+                                <a href="{% url 'product_detail' product.id %}" class="btn"><i class="lni lni-cart"></i> Ajouter au panier</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">{{ product.category.name }}</span>
+                            <h4 class="title">
+                                <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+                            </h4>
+                            <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Avis(s)</span></li>
+                            </ul>
+                            <div class="price">
+                                <span>{{ product.price }} XOF</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- End Trending Product Area -->
+    <!-- Start Call Action Area -->
+    <section class="call-action section" style="background-color: rgb(41, 35, 137);">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 col-12">
+                    <div class="inner">
+                        <div class="content">
+                            <h2 class="wow fadeInUp" data-wow-delay=".4s">
+                            {{ homepage.slogan }}, <br>
+                            commandez vos produits cosmétiques en toute simplicité, en seulement quelques clics 
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Call Action Area -->
+
+    <!-- Start Shipping Info -->
+    <section class="shipping-info">
+        <div class="container">
+            <ul>
+                <!-- Free Shipping -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-delivery" style="color: rgb(41, 35, 137);"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>Livraison gratuite</h5>
+                        <span>à partir 55 000 F CFA</span>
+                    </div>
+                </li>
+                <!-- Money Return -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-support" style="color: rgb(41, 35, 137);"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>Assistance 24/7</h5>
+                        <span>Chat en direct ou Appel.</span>
+                    </div>
+                </li>
+                <!-- Support 24/7 -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-credit-cards" style="color: rgb(41, 35, 137);"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>Paiement en ligne.</h5>
+                        <span>Service de paiement sécurisé.</span>
+                    </div>
+                </li>
+                <!-- Safe Payment -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-reload" style="color: rgb(41, 35, 137);"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>Retour facile.</h5>
+                        <span>Achats sans soucis.</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- End Shipping Info -->
+{% endblock content %}
+
+{% block footer %}
+    <!-- Start Footer Area -->
+    <footer class="footer">
+        <!-- Start Footer Top -->
+        <div class="footer-top">
+            <div class="container">
+                <div class="inner-content">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <div class="footer-logo">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-8 col-12">
+                            <div class="footer-newsletter">
+                                <h4 class="title">
+                                    S'abonner à notre lettre d'information
+                                 <span>Obtenez toutes les dernières informations, les ventes et les offres.</span>
+                                </h4>
+                                <div class="newsletter-form-head">
+                                    <form action="#" method="get" target="_blank" class="newsletter-form">
+                                        <input name="EMAIL" placeholder="Email address here..." type="email">
+                                        <div class="button">
+                                            <button class="btn" style="background-color: rgb(41, 35, 137);">Souscrire<span class="dir-part"></span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Top -->
+        <!-- Start Footer Middle -->
+        <div class="footer-middle">
+            <div class="container">
+                <div class="bottom-inner">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-contact">
+                                <h3>Prenez contact avec nous</h3>
+                                <p class="mail">
+                                <a href="tel:{{ contact_info.phone_number }}">+235 {{ contact_info.phone_number }}</a>
+                                </p>
+                                <p class="mail">
+                                    <a href="mailto:{{ contact_info.email }}">{{ contact_info.email }}</a>
+                                </p>
+                                <p class="mail">
+                                    <a href="{{ contact_info.google_maps_location }}" target=_blanck>Localisation</a>
+                                </p>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer our-app">
+                                <h3>Nos applications mobiles</h3>
+                                <ul class="app-btn">
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <i class="lni lni-apple"></i>
+                                            <span class="small-title">Télécharger sur</span>
+                                            <span class="big-title">App Store</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <i class="lni lni-play-store"></i>
+                                            <span class="small-title">Télécharger sur</span>
+                                            <span class="big-title">Google Play</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link">
+                                <h3>Information</h3>
+                                <ul>
+                                    <li><a href="{% url 'faq' %}">FAQs</a></li>
+                                    <li><a href="{% url 'condition_generale' %}">Politique de retour</a></li>
+                                    <li><a href="{% url 'politique_retour' %}">Conditions générales</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        {% comment %} 
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link">
+                                <h3>Shop Departments</h3>
+                                <ul>
+                                    <li><a href="javascript:void(0)">Computers & Accessories</a></li>
+                                    <li><a href="javascript:void(0)">Smartphones & Tablets</a></li>
+                                    <li><a href="javascript:void(0)">TV, Video & Audio</a></li>
+                                    <li><a href="javascript:void(0)">Cameras, Photo & Video</a></li>
+                                    <li><a href="javascript:void(0)">Headphones</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget --> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Middle -->
+        <!-- Start Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="inner-content">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 col-12">
+                            <div class="payment-gateway">
+                                <span>Nous acceptons:</span>
+                                <img src="{% static 'assets/images/footer/credit-cards-footer.png' %}" alt="#">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12">
+                            <div class="copyright">
+                                <p>Designed by<a href="https://sorasoft.tech/" rel="nofollow"
+                                        target="_blank">Sorasoft</a></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12">
+                            <ul class="socila">
+                                <li>
+                                    <span>Suivez nous sur:</span>
+                                </li>
+                                <li>
+                                    <a href="https://www.facebook.com/profile.php?id=61574199744739&mibextid=rS40aB7S9Ucbxw6v" target=_blanck><i class="lni lni-facebook-filled"></i></a>
+                                </li>
+                                <li>
+                                    <a href="https://www.tiktok.com/@rozana.healthy.cosmetic?_t=ZN-8uhhd0BMh4o&_r=1" target=_blanck><i class="lni lni-tiktok"></i></a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/rozanahealthycosmetictchad/profilecard/?igsh=aG90aGlzdDM1ZzNy" target=_blanck><i class="lni lni-instagram"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Bottom -->
+    </footer>
+    <!--/ End Footer Area -->
+{% endblock footer %}
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top" style="background-color: rgb(41, 35, 137);">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/tiny-slider.js' %}"></script>
+    <script src="{% static 'assets/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script type="text/javascript">
+        //========= Hero Slider 
+        tns({
+            container: '.hero-slider',
+            slideBy: 'page',
+            autoplay: true,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            gutter: 0,
+            items: 1,
+            nav: false,
+            controls: true,
+            controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
+        });
+
+        //======== Brand Slider
+        tns({
+            container: '.brands-logo-carousel',
+            autoplay: true,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            gutter: 15,
+            nav: false,
+            controls: false,
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                540: {
+                    items: 3,
+                },
+                768: {
+                    items: 5,
+                },
+                992: {
+                    items: 6,
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
