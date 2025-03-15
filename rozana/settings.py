@@ -23,7 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+#SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'django-insecure-!omfusx(6!vqrxvg8s9+#r5obes2s(f6u1)(&q9409k@358&!g'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -175,17 +177,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #(pour la producton)
 
+# EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST          = config('EMAIL_HOST')
+# EMAIL_PORT          = config('EMAIL_PORT')
+# EMAIL_HOST_USER     = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS       = True
+# EMAIL_USE_SSL       = False
+# DEFAULT_FROM_EMAIL  = config('DEFAULT_FROM_EMAIL')
+
+# ADMIN_EMAIL         = config('ADMIN_EMAIL')
+
+ADMIN_EMAIL = 'baytabourkouelie@gmail.com'
+
 EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST          = config('EMAIL_HOST')
-EMAIL_PORT          = config('EMAIL_PORT')
-EMAIL_HOST_USER     = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS       = True
-EMAIL_USE_SSL       = False
-DEFAULT_FROM_EMAIL  = config('DEFAULT_FROM_EMAIL')
-
-ADMIN_EMAIL         = config('ADMIN_EMAIL')
-
+EMAIL_HOST          = 'smtp.gmail.com'
+EMAIL_PORT          = 587
+EMAIL_HOST_USER     = 'baytabourkou.e@gmail.com'
+EMAIL_HOST_PASSWORD = "oenq yjeh pces nnbo "
+DEFAULT_FROM_EMAIL  = 'Rozana Healthy cosmetics <baytabourkou.e@gmail.com>'
 
 #Twillo settings.py
 # TWILIO_ACCOUNT_SID      = config('TWILIO_ACCOUNT_SID')
