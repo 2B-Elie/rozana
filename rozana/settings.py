@@ -28,7 +28,9 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['rozana-cosmetic.com','www.rozana-cosmetic.com','127.0.0.1']
+
+CSRF_TRUSTED_ORIGINS = ['https://rozana-cosmetic.com','https://www.rozana-cosmetic.com']
 
 
 # Application definition
