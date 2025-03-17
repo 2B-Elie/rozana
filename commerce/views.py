@@ -22,6 +22,8 @@ from .utils import send_whatsapp_message, send_order_email
 
 from django.shortcuts import get_object_or_404, redirect
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 class CustomLoginView(FormView):
     form_class = AuthenticationForm
     template_name = 'pages/registration/login.html'
@@ -87,31 +89,44 @@ class ProfileView(LoginRequiredMixin, UpdateView):
     
 
 
-class ProductListView(ListView):
-    model = Product
-    template_name = 'pages/shop/product_grid.html'
-    context_object_name = 'products'
-    paginate_by = 50  # Nombre de produits par page
+def product_list(request):
+    # Récupérer tous les produits ou filtrer par catégorie
+    category_id = request.GET.get('category')
+    if category_id:
+        product_list = Product.objects.filter(category_id=category_id).order_by('name')  # Ordonner par nom
+    else:
+        product_list = Product.objects.all().order_by('name')  # Ordonner par nom
 
-    def get_queryset(self):
-        # Filtrer les produits par catégorie si un paramètre est passé dans l'URL
-        category_id = self.request.GET.get('category')
-        if category_id:
-            return Product.objects.filter(category_id=category_id)
-        return Product.objects.all()
+    # Pagination
+    paginator = Paginator(product_list, 9)  # 12 produits par page
+    page = request.GET.get('page')  # Récupérer le numéro de page depuis l'URL
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()  # Ajouter les catégories au contexte
-        context['contact_info'] = ContactInfo.objects.first()
-        if self.request.user.is_authenticated:
-            cart, created = Cart.objects.get_or_create(user=self.request.user)
-            context['cart_items'] = cart.items.all()
-            context['cart_total'] = cart.total_price()
-        else:
-            context['cart_items'] = []
-            context['cart_total'] = 0 
-        return context
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        # Si le paramètre 'page' n'est pas un entier, afficher la première page
+        products = paginator.page(1)
+    except EmptyPage:
+        # Si la page est hors limite (trop grande), afficher la dernière page
+        products = paginator.page(paginator.num_pages)
+
+    # Contexte pour le template
+    context = {
+        'products': products,
+        'categories': Category.objects.all(),
+        'contact_info': ContactInfo.objects.first(),
+    }
+
+    # Ajouter les informations du panier si l'utilisateur est authentifié
+    if request.user.is_authenticated:
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        context['cart_items'] = cart.items.all()
+        context['cart_total'] = cart.total_price()
+    else:
+        context['cart_items'] = []
+        context['cart_total'] = 0
+
+    return render(request, 'pages/shop/product_grid.html', context)
 
 class ProductDetailView(DetailView):
     model = Product

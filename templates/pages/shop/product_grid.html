@@ -1,6 +1,5 @@
 {% extends '../../index.html' %}
 
-
 {% block navbar %}
 <!-- Start Navbar -->
 <nav class="navbar navbar-expand-lg">
@@ -34,7 +33,6 @@
 <!-- End Navbar -->
 {% endblock navbar %}
 
-
 {% block content %}
 <section class="product-grid-section">
     <div class="container">
@@ -61,18 +59,33 @@
                 <div class="row">
                     {% for product in products %}
                     <div class="col-md-4">
+                        <!-- Start Single Product -->
                         <div class="single-product">
-                            <div class="product-thumb">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid w-100" style="max-height: 200px; object-fit: cover;">
+                            <div class="product-image">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" height="250px">
+                                <div class="button">
+                                    <a href="{% url 'add_to_cart' product.id %}" class="btn"><i class="lni lni-cart"></i> Ajouter au panier</a>
+                                </div>
                             </div>
-                            <div class="product-content">
-                                <p style="color: black;">{{ product.name }}</p>
-                                <p>{{ product.description|safe|truncatewords:20 }}</p>
-                                <p class="price">{{ product.price }} XOF</p>
-                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">Voir détails</a>
-                                <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success">Ajouter au panier</a>
+                            <div class="product-info">
+                                <span class="category">{{ product.category.name }}</span>
+                                <h4 class="title">
+                                    <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+                                </h4>
+                                <ul class="review">
+                                    <li><i class="lni lni-star-filled"></i></li>
+                                    <li><i class="lni lni-star-filled"></i></li>
+                                    <li><i class="lni lni-star-filled"></i></li>
+                                    <li><i class="lni lni-star-filled"></i></li>
+                                    <li><i class="lni lni-star"></i></li>
+                                    <li><span>4.0 Avis(s)</span></li>
+                                </ul>
+                                <div class="price">
+                                    <span>{{ product.price }} XOF</span>
+                                </div>
                             </div>
                         </div>
+                        <!-- End Single Product -->
                     </div>
                     {% endfor %}
                 </div>
@@ -81,7 +94,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center">
+                            <ul class="pagination justify-content-center" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
                                 {% if products.has_previous %}
                                 <li class="page-item">
                                     <a class="page-link" href="?page={{ products.previous_page_number }}" aria-label="Précédent">
@@ -107,6 +120,7 @@
                         </nav>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
     </div>
