@@ -91,7 +91,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'pages/shop/product_grid.html'
     context_object_name = 'products'
-    paginate_by = 12  # Nombre de produits par page
+    paginate_by = 50  # Nombre de produits par page
 
     def get_queryset(self):
         # Filtrer les produits par catégorie si un paramètre est passé dans l'URL
