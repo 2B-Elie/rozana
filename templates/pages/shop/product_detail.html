@@ -66,6 +66,7 @@
                         <h1>{{ product.name }}</h1>
                         <h4 class="price">{{ product.price }} XOF</h4>
                         <p>{{ product.description|safe }}</p>
+                        <br>
                         <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success">Ajouter au panier</a>
                         <br><br>
                     </div>
