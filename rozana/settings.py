@@ -38,7 +38,7 @@ CSRF_TRUSTED_ORIGINS = ['https://rozana-cosmetic.com','https://www.rozana-cosmet
 # Application definition
 
 INSTALLED_APPS = [
-    'ckeditor',
+    'django_ckeditor_5',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -116,14 +116,77 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-CKEDITOR_CONFIGS = {
+CKEDITOR_5_UPLOAD_PATH = "uploads/blog_images/"  
+CKEDITOR_5_IMAGE_BACKEND = "pillow"  # Optionnel, mais recommandé
+# Configurations de CKEditor 5
+CKEDITOR_5_CONFIGS = {
     'default': {
-        'toolbar': 'full',
-        'height': 300,
-        'width': 'full',
-    },
+        'toolbar': [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript', '|',
+            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
+            'alignment', '|',
+            'numberedList', 'bulletedList', '|',
+            'outdent', 'indent', '|',
+            'blockQuote', 'link', 'imageUpload', 'mediaEmbed', 'insertTable', '|',
+            'code', 'codeBlock', '|',
+            'horizontalLine', 'pageBreak', '|',
+            'specialCharacters', 'smiley', '|',
+            'findAndReplace', 'selectAll', '|',
+            'sourceEditing', '|',
+            'undo', 'redo', '|',
+            'fullscreen'
+        ],
+        'height': '600px',
+        'width': '100%',
+        'language': 'fr',
+        'image': {
+            'toolbar': [
+                'imageTextAlternative', '|',
+                'imageStyle:inline', 'imageStyle:block', 'imageStyle:side', '|',
+                'toggleImageCaption', '|',
+                'imageResize:25', 'imageResize:50', 'imageResize:75', 'imageResize:original'
+            ],
+            'styles': [
+                'full',
+                'side',
+                'alignLeft',
+                'alignRight',
+                'alignCenter'
+            ]
+        },
+        'table': {
+            'contentToolbar': [
+                'tableColumn', 'tableRow', 'mergeTableCells', 
+                'tableProperties', 'tableCellProperties'
+            ],
+            'tableProperties': {
+                'borderColors': True,
+                'backgroundColors': True
+            }
+        },
+        'licenseKey': '',  # Laissez vide sauf si vous avez une clé pro
+        'htmlSupport': {
+            'allow': [
+                {'name': 'div', 'classes': True},
+                {'name': 'span', 'classes': True}
+            ]
+        },
+        'link': {
+            'decorators': {
+                'openInNewTab': {
+                    'mode': 'manual',
+                    'label': 'Ouvrir dans un nouvel onglet',
+                    'attributes': {
+                        'target': '_blank',
+                        'rel': 'noopener noreferrer'
+                    }
+                }
+            }
+        }
+    }
 }
+
 GRAPPELLI_ADMIN_TITLE = "Rozana Admin"  # Custom title for the admin interface
 GRAPPELLI_INDEX_DASHBOARD = 'rozana.dashboard.CustomIndexDashboard'
 
@@ -142,12 +205,16 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOGIN_URL = '/commerce/login/'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # Où les fichiers collectés seront stockés
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -186,17 +253,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ADMIN_EMAIL         = config('ADMIN_EMAIL')
 
-ADMIN_EMAIL = 'baytabourkouelie@gmail.com'
+ADMIN_EMAIL = 'contact@rozana-cosmetic.com'
 
 EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST          = 'smtp.gmail.com'
 EMAIL_PORT          = 587
-EMAIL_HOST_USER     = 'baytabourkou.e@gmail.com'
-EMAIL_HOST_PASSWORD = "oenq yjeh pces nnbo "
-DEFAULT_FROM_EMAIL  = 'Rozana Healthy cosmetics <baytabourkou.e@gmail.com>'
+EMAIL_HOST_USER     = 'baytabourkouelie@gmail.com'
+EMAIL_HOST_PASSWORD = "tzii ueig dted vejt"
+DEFAULT_FROM_EMAIL  = 'Rozana Healthy cosmetics <baytabourkouelie@gmail.com>'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 #Twillo settings.py
 # TWILIO_ACCOUNT_SID      = config('TWILIO_ACCOUNT_SID')
 # TWILIO_AUTH_TOKEN       = config('TWILIO_AUTH_TOKEN')
 # TWILIO_WHATSAPP_NUMBER  = config('TWILIO_WHATSAPP_NUMBER')
 # ADMIN_WHATSAPP_NUMBER   = config('ADMIN_WHATSAPP_NUMBER')
+
+
+ADMINS = [('Admin Rozana', 'baytabourkouelie@gmail.com'),]

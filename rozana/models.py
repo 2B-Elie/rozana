@@ -1,4 +1,4 @@
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 from django.db import models
 
 from django.db import models
@@ -26,7 +26,7 @@ class HomePageImage(models.Model):
 class FeaturedProduct(models.Model):
     home_page = models.ForeignKey(HomePage, related_name='featured_products', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-    description = RichTextField()
+    description = CKEditor5Field()
     image = models.ImageField(upload_to='featured_products/')
 
     def __str__(self):
@@ -38,7 +38,7 @@ class FeaturedProduct(models.Model):
 
     
 class ReturnPolicy(models.Model):
-    policy_text = RichTextField(help_text="Politique de retour et d’échange.")
+    policy_text = CKEditor5Field(help_text="Politique de retour et d’échange.")
 
     class Meta:
         verbose_name = "Politique de retour"
@@ -46,8 +46,8 @@ class ReturnPolicy(models.Model):
 
 #  "Qui sommes-nous ?"
 class AboutUs(models.Model):
-    history = RichTextField(help_text="Texte décrivant la création et les valeurs de Razana Healthy Cosmetics.")
-    mission = RichTextField(help_text="Objectifs à long terme et engagement envers les clients.")
+    history = CKEditor5Field(help_text="Texte décrivant la création et les valeurs de Razana Healthy Cosmetics.")
+    mission = CKEditor5Field(help_text="Objectifs à long terme et engagement envers les clients.")
     team_photo = models.ImageField(upload_to='team_photos/', null=True, blank=True)
 
     class Meta:
@@ -71,7 +71,7 @@ class ContactInfo(models.Model):
 # Contenus généraux
 class GeneralContent(models.Model):
     logo = models.ImageField(upload_to='logos/', help_text="Logo de l’entreprise en haute résolution.")
-    color_palette = RichTextField(help_text="Palette de couleurs et typographie.", null=True, blank=True)
+    color_palette = CKEditor5Field(help_text="Palette de couleurs et typographie.", null=True, blank=True)
     additional_media = models.FileField(upload_to='media/', null=True, blank=True, help_text="Médias supplémentaires comme icônes spécifiques, bannières publicitaires, etc.")
     
     class Meta:

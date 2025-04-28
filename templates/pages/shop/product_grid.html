@@ -1,4 +1,5 @@
 {% extends '../../index.html' %}
+{% load query_modification %}
 
 {% block navbar %}
 <!-- Start Navbar -->
@@ -41,16 +42,27 @@
             <div class="col-lg-3">
                 <div class="sidebar">
                     <h4>Catégories</h4>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="{% url 'shop' %}">Toutes les catégories</a>
-                        </li>
+                    <form id="filter-form" method="get">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="category" value="" id="all-categories" 
+                                   {% if not selected_categories %}checked{% endif %}>
+                            <label class="form-check-label" for="all-categories">
+                                Toutes les catégories
+                            </label>
+                        </div>
                         {% for category in categories %}
-                        <li class="list-group-item">
-                            <a href="{% url 'shop' %}?category={{ category.id }}">{{ category.name }}</a>
-                        </li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="category" value="{{ category.id }}" 
+                                   id="category-{{ category.id }}" 
+                                   {% if category.id|stringformat:"s" in selected_categories %}checked{% endif %}>
+                            <label class="form-check-label" for="category-{{ category.id }}">
+                                {{ category.name }}
+                            </label>
+                        </div>
                         {% endfor %}
-                    </ul>
+                        <input type="hidden" name="page" value="1">
+                        <button type="submit" class="btn btn-primary mt-3">Filtrer</button>
+                    </form>
                 </div>
             </div>
 
@@ -58,11 +70,15 @@
             <div class="col-lg-9">
                 <div class="row">
                     {% for product in products %}
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-4">
                         <!-- Start Single Product -->
                         <div class="single-product">
                             <div class="product-image">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" height="250px">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" height="250px" style="object-fit: cover;">
+                                {% else %}
+                                <img src="https://via.placeholder.com/300x250" alt="Image non disponible" height="250px">
+                                {% endif %}
                                 <div class="button">
                                     <a href="{% url 'add_to_cart' product.id %}" class="btn"><i class="lni lni-cart"></i> Ajouter au panier</a>
                                 </div>
@@ -87,6 +103,12 @@
                         </div>
                         <!-- End Single Product -->
                     </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-warning">
+                            Aucun produit trouvé dans cette catégorie.
+                        </div>
+                    </div>
                     {% endfor %}
                 </div>
 
@@ -97,7 +119,7 @@
                             <ul class="pagination justify-content-center" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
                                 {% if products.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page={{ products.previous_page_number }}" aria-label="Précédent">
+                                    <a class="page-link" href="?{% modify_query page=products.previous_page_number %}" aria-label="Précédent">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
@@ -105,13 +127,13 @@
 
                                 {% for num in products.paginator.page_range %}
                                 <li class="page-item {% if products.number == num %}active{% endif %}">
-                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    <a class="page-link" href="?{% modify_query page=num %}">{{ num }}</a>
                                 </li>
                                 {% endfor %}
 
                                 {% if products.has_next %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Suivant">
+                                    <a class="page-link" href="?{% modify_query page=products.next_page_number %}" aria-label="Suivant">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
                                 </li>
@@ -120,9 +142,45 @@
                         </nav>
                     </div>
                 </div>
-                <br>
             </div>
         </div>
     </div>
 </section>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Gestion du checkbox "Toutes les catégories"
+    const allCategoriesCheckbox = document.getElementById('all-categories');
+    const categoryCheckboxes = document.querySelectorAll('input[name="category"]:not(#all-categories)');
+    
+    allCategoriesCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        }
+    });
+    
+    categoryCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                allCategoriesCheckbox.checked = false;
+            }
+        });
+    });
+    
+    // Gestion du formulaire pour conserver les autres paramètres
+    const filterForm = document.getElementById('filter-form');
+    filterForm.addEventListener('submit', function(e) {
+        // Décocher "Toutes les catégories" si d'autres cases sont cochées
+        const checkedCategories = document.querySelectorAll('input[name="category"]:checked:not(#all-categories)');
+        if (checkedCategories.length > 0) {
+            allCategoriesCheckbox.checked = false;
+        }
+    });
+});
+</script>
 {% endblock %}

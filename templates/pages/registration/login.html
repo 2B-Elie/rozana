@@ -72,6 +72,11 @@
                             <label for="password">Mot de passe</label>
                             <input type="password" name="password" class="form-control" id="password" required>
                         </div>
+                        <div class="form-check mt-2">
+                            <input type="checkbox" class="form-check-input" id="showPasswordToggle" onclick="togglePasswordVisibility()">
+                            <label class="form-check-label" for="showPasswordToggle">Afficher le mot de passe</label>
+                        </div>
+                        
                         <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
                     </form>
                     <div class="text-center mt-3">
@@ -85,6 +90,13 @@
         </div>
     </div>
 </div>
+<script>
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById("password");
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+    }
+</script>
 
 
 {% endblock %}

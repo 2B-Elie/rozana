@@ -19,3 +19,12 @@ def send_order_email(subject, message):
         [settings.ADMIN_EMAIL],
         fail_silently=False,
     )
+
+def send_copy_order_email(subject, message,user_email):
+    send_mail(
+        subject,
+        message,
+        settings.EMAIL_HOST_USER,
+        [user_email],
+        fail_silently=False,
+    )    

@@ -22,6 +22,7 @@ from .views import HomePageView, AboutPageView, ContactPageView
 
 
 urlpatterns = [
+    path('ckeditor5/', include('django_ckeditor_5.urls')),  # ← important
     path('admin/', admin.site.urls),
     path('grappelli/', include('grappelli.urls')), # grappelli URLS
 
@@ -57,8 +58,7 @@ urlpatterns = [
 
     # #urls for privacy policy
     # path('privacy-policy/', include('privacy_policy.urls')),
-]
-
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

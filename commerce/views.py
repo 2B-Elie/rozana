@@ -18,11 +18,12 @@ from rozana.models import ContactInfo
 
 from django.contrib import messages
 
-from .utils import send_whatsapp_message, send_order_email
+from .utils import send_whatsapp_message, send_order_email, send_copy_order_email
 
 from django.shortcuts import get_object_or_404, redirect
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 class CustomLoginView(FormView):
     form_class = AuthenticationForm
@@ -89,34 +90,37 @@ class ProfileView(LoginRequiredMixin, UpdateView):
     
 
 
+from django.http import QueryDict
+
 def product_list(request):
-    # Récupérer tous les produits ou filtrer par catégorie
-    category_id = request.GET.get('category')
-    if category_id:
-        product_list = Product.objects.filter(category_id=category_id).order_by('name')  # Ordonner par nom
+    # Récupérer les catégories sélectionnées
+    selected_categories = request.GET.getlist('category', [])
+    
+    # Filtrer les produits
+    if selected_categories:
+        product_list = Product.objects.filter(category_id__in=selected_categories).order_by('name')
     else:
-        product_list = Product.objects.all().order_by('name')  # Ordonner par nom
-
+        product_list = Product.objects.all().order_by('name')
+    
     # Pagination
-    paginator = Paginator(product_list, 9)  # 12 produits par page
-    page = request.GET.get('page')  # Récupérer le numéro de page depuis l'URL
-
+    paginator = Paginator(product_list, 9)  # 9 produits par page
+    page = request.GET.get('page')
+    
     try:
         products = paginator.page(page)
     except PageNotAnInteger:
-        # Si le paramètre 'page' n'est pas un entier, afficher la première page
         products = paginator.page(1)
     except EmptyPage:
-        # Si la page est hors limite (trop grande), afficher la dernière page
         products = paginator.page(paginator.num_pages)
-
+    
     # Contexte pour le template
     context = {
         'products': products,
         'categories': Category.objects.all(),
+        'selected_categories': selected_categories,
         'contact_info': ContactInfo.objects.first(),
     }
-
+    
     # Ajouter les informations du panier si l'utilisateur est authentifié
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
@@ -125,8 +129,9 @@ def product_list(request):
     else:
         context['cart_items'] = []
         context['cart_total'] = 0
-
+    
     return render(request, 'pages/shop/product_grid.html', context)
+
 
 class ProductDetailView(DetailView):
     model = Product
@@ -171,14 +176,40 @@ def checkout(request):
             # Vider le panier
             cart.items.all().delete()
 
-            # Préparer le message WhatsApp avec les détails de la commande
-            whatsapp_message = f"Nouvelle commande #{order.id} de {user.username}\n\n"
-            whatsapp_message += "Détails de la commande :\n"
-            
+            # Récupérer le profil utilisateur
+            profile = UserProfile.objects.get(user=user)
+
+            # Construire le nom complet, avec fallback sur le username
+            full_name = f"{profile.first_name or ''} {profile.last_name or ''}".strip()
+            if not full_name:
+                full_name = user.username
+
+            # Préparer le message WhatsApp
+            whatsapp_message = f"Nouvelle commande #{order.id} de {full_name}\n\n"
+            whatsapp_message += "📦 Détails de la commande :\n"
+
             for item in order.items.all():
                 whatsapp_message += f"- {item.product.name} : {item.quantity} x {item.product.price} XOF\n"
-            
-            whatsapp_message += f"\nMontant total : {total_price} XOF."
+
+            whatsapp_message += f"\n💰 Montant total : {total_price} XOF\n"
+            whatsapp_message += f"\n📍 Adresse de livraison : {profile.delivery_address or 'Non spécifiée'}\n"
+            whatsapp_message += f"📞 Contact : {profile.phone_number or 'Non spécifié'}\n"
+            # Message à envoyer au client
+            copy_message = f"Bonjour {full_name},\n\n"
+            copy_message += f"Merci pour votre commande #{order.id} sur notre boutique !\n\n"
+            copy_message += "🧾 Détails de la commande :\n"
+
+            for item in order.items.all():
+                copy_message += f"- {item.product.name} : {item.quantity} x {item.product.price} XOF\n"
+
+            copy_message += f"\n💰 Montant total : {total_price} XOF\n"
+            copy_message += f"\n📍 Adresse de livraison : {profile.delivery_address or 'Non spécifiée'}\n"
+            copy_message += f"📞 Contact : {profile.phone_number or 'Non spécifié'}\n"
+            copy_message += "\nNous vous contacterons bientôt pour la confirmation.\n\nMerci de votre confiance !"
+
+            # Envoyer la copie par email au client
+            subject = f"Confirmation de votre commande #{order.id}"
+            send_copy_order_email(subject, copy_message, user.email)
 
             # Envoyer une notification WhatsApp
             #send_whatsapp_message(whatsapp_message)
@@ -199,6 +230,7 @@ def checkout(request):
     return render(request, 'pages/shop/checkout.html')
 
 
+@login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     user = request.user

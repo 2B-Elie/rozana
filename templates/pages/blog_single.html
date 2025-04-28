@@ -1,0 +1,324 @@
+{% extends '../index.html' %}
+{% load static %}
+{% load blog_tags %}
+
+{% block navbar %}
+<!-- Start Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item mx-2">
+                    <a href="/" class="nav-link">Accueil</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a href="{% url 'shop' %}" class="nav-link">Boutique</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a href="{% url 'contact' %}" class="nav-link">Contacts</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a href="{% url 'blog' %}" class="nav-link active fw-bold">Blog</a>
+                </li>
+                <li class="nav-item mx-2">
+                    <a href="{% url 'about' %}" class="nav-link">À propos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- End Navbar -->
+{% endblock navbar %}
+
+{% block content %}
+<!-- Start Single Blog -->
+<section class="single-blog-section py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Main Blog Content -->
+            <div class="col-lg-8">
+                <article class="blog-article">
+                    <!-- Blog Thumbnail -->
+                    <div class="blog-thumb mb-4 rounded-3 overflow-hidden">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid w-100" style="max-height: 500px; object-fit: cover;">
+                        {% else %}
+                        <img src="https://via.placeholder.com/1200x630" alt="Blog Image" class="img-fluid w-100" style="max-height: 500px; object-fit: cover;">
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Blog Meta -->
+                    <div class="d-flex flex-wrap align-items-center mb-4">
+                        <div class="d-flex align-items-center me-4">
+                            <i class="fas fa-calendar-alt text-primary me-2"></i>
+                            <span class="text-muted">{{ post.created_at|date:"d F Y" }}</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-tag text-primary me-2"></i>
+                            <span class="badge bg-primary bg-opacity-10 text-primary">{{ post.get_category_display }}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Title -->
+                    <h1 class="blog-title mb-4">{{ post.title }}</h1>
+                    
+                    <!-- Social Sharing -->
+                    <div class="social-sharing mb-5">
+                        <span class="me-2">Partager :</span>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="text-decoration-none me-2">
+                            <i class="fab fa-facebook-f text-primary"></i>
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?text={{ post.title|urlencode }}&url={{ request.build_absolute_uri }}" target="_blank" class="text-decoration-none me-2">
+                            <i class="fab fa-twitter text-info"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ post.title|urlencode }}" target="_blank" class="text-decoration-none me-2">
+                            <i class="fab fa-linkedin-in text-primary"></i>
+                        </a>
+                        <a href="whatsapp://send?text={{ post.title|urlencode }} {{ request.build_absolute_uri }}" class="text-decoration-none">
+                            <i class="fab fa-whatsapp text-success"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Blog Content -->
+                    <div class="blog-content mb-5">
+                        {{ post.content|safe }}
+                    </div>
+                    
+                    <!-- Author Box -->
+                    <div class="author-box bg-light p-4 rounded-3 mb-5">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0 me-3">
+                                <img src="{% static 'images/default-avatar.png' %}" alt="Admin" class="rounded-circle" width="80">
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1">Admin</h5>
+                                <p class="text-muted small mb-2">Auteur</p>
+                                <p class="mb-0">Retrouvez tous mes conseils beauté et astuces cosmétiques sur ce blog.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Related Posts -->
+                    {% if related_posts %}
+                    <div class="related-posts mb-5">
+                        <h3 class="mb-4">Articles similaires</h3>
+                        <div class="row">
+                            {% for related_post in related_posts %}
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-img-top overflow-hidden" style="height: 200px;">
+                                        {% if related_post.image %}
+                                        <img src="{{ related_post.image.url }}" alt="{{ related_post.title }}" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                                        {% else %}
+                                        <img src="https://via.placeholder.com/800x500" alt="Blog Image" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-body">
+                                        <span class="badge bg-primary bg-opacity-10 text-primary mb-2">{{ related_post.get_category_display }}</span>
+                                        <h5 class="card-title">
+                                            <a href="{% url 'blog_single' pk=related_post.id %}" class="text-decoration-none">{{ related_post.title }}</a>
+                                        </h5>
+                                    </div>
+                                    <div class="card-footer bg-transparent">
+                                        <small class="text-muted">
+                                            <i class="far fa-calendar-alt me-1"></i> {{ related_post.created_at|date:"d M Y" }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Comments Section -->
+                    <div class="comments-section">
+                        <h3 class="mb-4">Commentaires</h3>
+                        
+                        <!-- Comment Form -->
+                        {% if user.is_authenticated %}
+                        <div class="comment-form mb-5">
+                            <form method="post" action="{% url 'blog_single' pk=post.id %}">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <textarea class="form-control" name="content" rows="3" placeholder="Ajouter un commentaire..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Publier</button>
+                            </form>
+                        </div>
+                        {% else %}
+                        <div class="alert alert-info mb-5">
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="text-decoration-none">Connectez-vous</a> pour laisser un commentaire.
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Comment List -->
+                        <div class="comment-list">
+                            {% for comment in comments %}
+                            <div class="comment mb-4 p-3 bg-light rounded">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-3">
+                                        <img src="{% static 'images/default-avatar.png' %}" alt="User" class="rounded-circle" width="50">
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="mb-0">{{ comment.author.username }}</h6>
+                                            <small class="text-muted">{{ comment.created_at|date:"d M Y H:i" }}</small>
+                                        </div>
+                                        <p class="mb-0">{{ comment.content }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <p class="text-muted">Aucun commentaire pour le moment.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sidebar sticky-top ps-lg-4">
+                    <!-- Search Widget -->
+                    <div class="widget search-widget mb-5">
+                        <h4 class="widget-title mb-4">Rechercher</h4>
+                        <form method="get" action="{% url 'blog' %}">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search" placeholder="Rechercher..." value="{{ request.GET.search|default:'' }}">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Categories Widget -->
+                    <div class="widget categories-widget mb-5">
+                        <h4 class="widget-title mb-4">Catégories</h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <a href="{% url 'blog' %}" class="text-decoration-none d-flex justify-content-between align-items-center">
+                                    <span>Toutes les catégories</span>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary">{% total_posts %}</span>
+                                </a>
+                            </li>
+                            {% for value, label in categories.items %}
+                            <li class="mb-2">
+                                <a href="{% url 'blog' %}?category={{ value }}" class="text-decoration-none d-flex justify-content-between align-items-center">
+                                    <span>{{ label }}</span>
+                                    <span class="badge bg-primary bg-opacity-10 text-primary">{{ value|post_count }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <!-- Recent Posts Widget -->
+                    <div class="widget recent-posts-widget mb-5">
+                        <h4 class="widget-title mb-4">Articles récents</h4>
+                        <div class="recent-posts">
+                            {% for recent_post in recent_posts %}
+                            <div class="recent-post-item d-flex mb-3">
+                                {% if recent_post.image %}
+                                <div class="flex-shrink-0 me-3">
+                                    <img src="{{ recent_post.image.url }}" alt="{{ recent_post.title }}" width="80" height="60" style="object-fit: cover;">
+                                </div>
+                                {% endif %}
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">
+                                        <a href="{% url 'blog_single' pk=recent_post.id %}" class="text-decoration-none">{{ recent_post.title|truncatewords:5 }}</a>
+                                    </h6>
+                                    <small class="text-muted">
+                                        <i class="far fa-calendar-alt me-1"></i> {{ recent_post.created_at|date:"d M Y" }}
+                                    </small>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Tags Widget -->
+                    {% if tags %}
+                    <div class="widget tags-widget">
+                        <h4 class="widget-title mb-4">Tags</h4>
+                        <div class="tags">
+                            {% for tag in tags %}
+                            <a href="{% url 'blog' %}?tag={{ tag.name }}" class="tag">#{{ tag.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Single Blog -->
+
+<style>
+    .blog-article {
+        line-height: 1.8;
+    }
+    .blog-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+    .blog-content img {
+        max-width: 100%;
+        height: auto;
+        margin: 1.5rem 0;
+        border-radius: 0.5rem;
+    }
+    .blog-content p {
+        margin-bottom: 1.5rem;
+    }
+    .blog-content h2, 
+    .blog-content h3, 
+    .blog-content h4 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+    .social-sharing a {
+        font-size: 1.2rem;
+        margin-right: 0.8rem;
+        transition: transform 0.3s;
+    }
+    .social-sharing a:hover {
+        transform: translateY(-3px);
+    }
+    .tag {
+        display: inline-block;
+        background: #f8f9fa;
+        padding: 0.3rem 0.8rem;
+        margin: 0 0.5rem 0.5rem 0;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        color: #495057;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+    .tag:hover {
+        background: #0d6efd;
+        color: white;
+    }
+    .sticky-top {
+        top: 20px;
+    }
+    .comment {
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 0.5rem;
+    }
+    .author-box {
+        border-left: 4px solid #0d6efd;
+    }
+</style>
+{% endblock content %}

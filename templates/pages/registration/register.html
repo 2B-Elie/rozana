@@ -115,6 +115,11 @@
                                 </div>
                             {% endif %}
                         </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="showPasswordToggle" onclick="togglePasswordVisibility()">
+                            <label class="form-check-label" for="showPasswordToggle">Afficher les mots de passe</label>
+                        </div>
+                        
                         <div class="form-group">
                             <label for="address">Adresse</label>
                             {{ form.address }}
@@ -133,4 +138,14 @@
         </div>
     </div>
 </div>
+<script>
+    function togglePasswordVisibility() {
+        const pass1 = document.getElementById("id_password1");
+        const pass2 = document.getElementById("id_password2");
+        const type = pass1.type === "password" ? "text" : "password";
+        pass1.type = type;
+        pass2.type = type;
+    }
+</script>
+
 {% endblock %}

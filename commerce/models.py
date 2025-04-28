@@ -1,5 +1,5 @@
 from django.db import models
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -43,7 +43,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    description = RichTextField()
+    description = CKEditor5Field()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='products/')
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)

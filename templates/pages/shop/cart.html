@@ -57,7 +57,7 @@
     }
     .product-info img {
         width: 80px;
-        height: 80px;
+        height: 50px;
         margin-right: 15px;
     }
     .quantity input {
@@ -86,13 +86,58 @@
         width: 100%;
         margin-bottom: 10px;
     }
+    .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    }
+    @media (max-width: 768px) {
+    .product-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .product-info img {
+        width: 100%;
+        height: 60px;
+        margin-bottom: 10px;
+    }
+
+    .product-info p {
+        font-size: 14px;
+    }
+
+    .cart-table th,
+    .cart-table td {
+        font-size: 12px;
+        padding: 10px 5px;
+    }
+
+    .cart-buttons .btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .quantity input {
+        width: 50px;
+    }
+
+    .quantity form {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .quantity .btn {
+        width: 100%;
+    }
+}
+
 </style>
 <!-- Start Cart Area -->
 <section class="cart-section pt-120 pb-120">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <div class="cart-table">
+                <div class="cart-table table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
@@ -109,7 +154,7 @@
                                 <td>
                                     <div class="product-info">
                                         <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-fluid">
-                                        <h4><a href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a></h4>
+                                        <p><a href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a></p>
                                     </div>
                                 </td>
                                 <td>{{ item.product.price }} XOF</td>
