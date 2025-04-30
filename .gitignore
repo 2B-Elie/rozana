@@ -1,2 +1,3 @@
 Chemin suivi
-.env.env
+.env
+db.sqlite3
